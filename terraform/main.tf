@@ -1,12 +1,12 @@
 module "vpc" {
-  source             = "../teraform-modules/vpc"
+  source             = "../terraform/vpc"
   name               = var.app_name
   availability_zones = data.aws_availability_zones.az.names
   cidr_block         = var.VPC_cidr_block
 }
 
 module "igw" {
-  source         = "../teraform-modules/igw"
+  source         = "../terraform/igw"
   name           = var.app_name
   vpc_id         = module.vpc.vpc_id
   cidr_block     = var.IGW_cidr_block
@@ -15,7 +15,7 @@ module "igw" {
 }
 
 module "nat" {
-  source          = "../teraform-modules/nat"
+  source          = "../terraform/nat"
   name            = var.app_name
   vpc_id          = module.vpc.vpc_id
   cidr_block      = var.NAT_cidr_block
@@ -25,7 +25,7 @@ module "nat" {
 }
 
 module "rds" {
-  source                  = "../teraform-modules/rds"
+  source                  = "../terraform/rds"
   name                    = var.app_name
   subnet_ids              = module.vpc.db_subnets[*].id
   allocated_storage       = var.RDS_allocated_storage
@@ -46,7 +46,7 @@ module "rds" {
 }
 
 module "lambda" {
-  source     = "../teraform-modules/lambda"
+  source     = "../terraform/lambda"
   name       = var.app_name
   vpc_id     = module.vpc.vpc_id
   handler    = var.Lambda_handler
@@ -57,7 +57,7 @@ module "lambda" {
 }
 
 module "api-gateway" {
-  source        = "../teraform-modules/api-gateway"
+  source        = "../terraform/api-gateway"
   name          = var.app_name
   function_name = module.lambda.function_name
   invoke_arn    = module.lambda.invoke_arn

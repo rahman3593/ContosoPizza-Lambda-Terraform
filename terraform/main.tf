@@ -1,3 +1,19 @@
+resource "null_resource" "package_build" {
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
+    command     = "(cd \"${path.root}/../ContosoPizza\" && dotnet clean && dotnet publish -c Release)"
+  }
+
+  provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
+    command     = "(cd \"${path.root}/../ContosoPizza/bin/Release/net6.0/publish\" && zip -r ContosoPizza.zip .)"
+  }
+}
+
 module "vpc" {
   source             = "../terraform/vpc"
   name               = var.app_name
@@ -59,7 +75,7 @@ module "lambda" {
     DBPassword = var.RDS_password
     DBName     = "ContosoPizza"
   }
-  depends_on = [module.vpc]
+  depends_on = [module.vpc, null_resource.package_build]
 }
 
 module "api-gateway" {
@@ -67,5 +83,5 @@ module "api-gateway" {
   name          = var.app_name
   function_name = module.lambda.function_name
   invoke_arn    = module.lambda.invoke_arn
-  depends_on    = [module.lambda]
+  depends_on    = [module.lambda, null_resource.package_build]
 }

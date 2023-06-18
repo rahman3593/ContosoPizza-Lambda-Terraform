@@ -53,6 +53,12 @@ module "lambda" {
   filename   = var.Lambda_filename
   runtime    = var.Lambda_runtime
   subnet_ids = module.vpc.private_subnets[*].id
+  envVariables = {
+    DBHost     = module.rds.rds_host
+    DBUserName = var.RDS_username
+    DBPassword = var.RDS_password
+    DBName     = "ContosoPizza"
+  }
   depends_on = [module.vpc]
 }
 

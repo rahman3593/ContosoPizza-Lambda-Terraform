@@ -21,5 +21,5 @@ RDS_skip_final_snapshot     = true
 
 # Lambda
 Lambda_runtime  = "dotnet6"
-Lambda_handler  = "HelloWorld::HelloWorld.Function::FunctionHandler"
-Lambda_filename = "../HelloWorld/src/HelloWorld/bin/Release/net6.0/publish/Archive.zip"
+Lambda_handler  = "ContosoPizza"
+Lambda_filename = "../ContosoPizza/bin/net6.0/publish/Archive.zip"

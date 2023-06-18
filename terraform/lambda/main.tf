@@ -10,6 +10,9 @@ resource "aws_lambda_function" "lambda-function" {
     security_group_ids = [data.aws_security_group.default-sg.id]
     subnet_ids         = var.subnet_ids
   }
+  environment {
+    variables = var.envVariables
+  }
 }
 
 data "aws_iam_policy_document" "AWSLambdaTrustPolicy" {

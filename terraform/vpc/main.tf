@@ -1,8 +1,5 @@
 resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_block
-  tags = {
-    Name = "${var.name}-vpc"
-  }
 }
 
 resource "aws_subnet" "public_subnets" {
@@ -11,9 +8,6 @@ resource "aws_subnet" "public_subnets" {
   cidr_block              = "10.0.${1 + count.index}.0/24"
   availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = "true"
-  tags = {
-    Name = "${var.name}-public-subnet-${1 + count.index}"
-  }
 }
 
 resource "aws_subnet" "private_subnets" {
@@ -22,9 +16,6 @@ resource "aws_subnet" "private_subnets" {
   cidr_block              = "10.0.${4 + count.index}.0/24"
   availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = "false"
-  tags = {
-    Name = "${var.name}-private-subnet-${1 + count.index}"
-  }
 }
 
 resource "aws_subnet" "db_subnets" {
@@ -33,7 +24,4 @@ resource "aws_subnet" "db_subnets" {
   cidr_block              = "10.0.${7 + count.index}.0/24"
   availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = "false"
-  tags = {
-    Name = "${var.name}-db-subnet-${1 + count.index}"
-  }
 }

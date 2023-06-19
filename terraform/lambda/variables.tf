@@ -1,4 +1,4 @@
-variable "name" {
+variable "function_name" {
   type = string
 }
 variable "handler" {
@@ -11,6 +11,12 @@ variable "filename" {
   type = string
 }
 variable "vpc_id" {
+  type = string
+}
+variable "default_sg_id" {
+  type = string
+}
+variable "role_name" {
   type = string
 }
 variable "subnet_ids" {

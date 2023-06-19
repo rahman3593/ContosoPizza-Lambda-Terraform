@@ -1,6 +1,3 @@
-variable "name" {
-  type = string
-}
 variable "subnet_ids" {
   type = list(string)
 }
@@ -46,4 +43,7 @@ variable "availability_zone" {
 variable "skip_final_snapshot" {
   type = bool
   default = true
+}
+variable "db_subnet_group_name" {
+  type = string
 }

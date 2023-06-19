@@ -1,6 +1,5 @@
 resource "aws_db_subnet_group" "rds-subnet-group" {
-  name        = "${var.name}-rds-subnet-group"
-  description = "RDS subnet group"
+  name        = var.db_subnet_group_name
   subnet_ids  = var.subnet_ids
 }
 
@@ -20,8 +19,5 @@ resource "aws_db_instance" "postgres" {
   storage_type            = var.storage_type
   backup_retention_period = var.backup_retention_period 
   availability_zone       = var.availability_zone
-  skip_final_snapshot     = true
-  tags = {
-    Name = "${var.name}-rds-instance"
-  }
+  skip_final_snapshot     = var.skip_final_snapshot
 }

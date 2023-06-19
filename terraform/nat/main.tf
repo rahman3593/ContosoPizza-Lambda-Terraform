@@ -13,12 +13,7 @@ resource "aws_route_table" "nat-route-table" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat-gw.id
   }
-
-  tags = {
-    Name = "${var.name}-nat-route-table"
-  }
 }
-
 
 resource "aws_route_table_association" "route_table_association" {
   count = length(var.private_subnets)
